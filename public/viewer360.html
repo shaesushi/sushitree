@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Viewer 360°</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; background: #0C0C0B; overflow: hidden; }
+    #panorama { width: 100%; height: 100%; }
+
+    /* ── Customiza o loading nativo do Pannellum ── */
+    .pnlm-load-box {
+      background: rgba(12,12,11,0.85) !important;
+      border-radius: 10px !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      padding: 16px 24px !important;
+    }
+    .pnlm-load-box p {
+      font-family: sans-serif !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: rgba(184,150,110,0.9) !important;
+    }
+    .pnlm-lbar {
+      background: rgba(184,150,110,0.25) !important;
+      border-radius: 4px !important;
+    }
+    .pnlm-lbar-fill {
+      background: #B8966E !important;
+      border-radius: 4px !important;
+    }
+    /* Esconde botão de load manual (usamos autoLoad) */
+    .pnlm-load-button { display: none !important; }
+    /* Esconde logo Pannellum */
+    .pnlm-about-msg { display: none !important; }
+  </style>
+</head>
+<body>
+  <div id="panorama"></div>
+
+  <script>
+    var params = new URLSearchParams(window.location.search);
+    var url    = params.get('url');
+
+    if (!url) {
+      document.body.innerHTML =
+        '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;' +
+        'background:#0C0C0B;font-family:sans-serif;font-size:11px;letter-spacing:2px;' +
+        'text-transform:uppercase;color:rgba(255,80,80,0.6)">URL não informada</div>';
+    } else {
+      try {
+        var viewer = pannellum.viewer('panorama', {
+          type:         'equirectangular',
+          panorama:     url,
+          autoLoad:     true,
+          autoRotate:   -2,
+          compass:      false,
+          showControls: false,
+          hfov:         100,
+          minHfov:      50,
+          maxHfov:      120,
+          crossOrigin:  'anonymous',
+        });
+      } catch (e) {
+        console.error('[viewer360] init error:', e);
+      }
+    }
+  </script>
+</body>
+</html>
