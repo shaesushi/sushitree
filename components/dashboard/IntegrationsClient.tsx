@@ -42,8 +42,8 @@ const PLACEHOLDERS: Record<string, string> = {
   meta_pixel: "000000000000000",
   hotjar: "0000000",
   microsoft_clarity: "xxxxxxxxxx",
-  open_graph_title: "Shae Sushi · Culinária Japonesa",
-  open_graph_description: "Delivery e restaurante japonês em Foz do Iguaçu",
+  open_graph_title: "Claudinéia Calegari · Corretora",
+  open_graph_description: "Especialista em imóveis em Foz do Iguaçu",
   open_graph_image: "https://...",
 };
 
