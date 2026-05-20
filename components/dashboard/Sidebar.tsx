@@ -48,7 +48,7 @@ export function Sidebar({ userEmail, userRole, userName }: SidebarProps) {
       {/* Logo */}
       <div className="p-6 border-b border-white/5">
         <p className="text-[9px] tracking-[3px] uppercase text-[#B8966E] font-medium mb-1">Painel Admin</p>
-        <h2 className="font-bebas text-xl text-white tracking-wider leading-tight">CLAUDINÉIA<br/>CALEGARI</h2>
+        <h2 className="font-bebas text-xl text-white tracking-wider leading-tight">SHAE<br/>SUSHI</h2>
       </div>
 
       {/* Nav */}
