@@ -4,19 +4,7 @@
 -- ═══════════════════════════════════════════════════════════════════════════
 
 
--- ─── 1. FUNÇÃO get_my_role (sem recursão no RLS) ─────────────────────────────
-create or replace function public.get_my_role()
-returns text
-language sql
-security definer
-set search_path = public
-stable
-as $$
-  select role from public.profiles where id = auth.uid();
-$$;
-
-
--- ─── 2. PROFILES ─────────────────────────────────────────────────────────────
+-- ─── 1. PROFILES (antes da função get_my_role) ───────────────────────────────
 create table if not exists public.profiles (
   id          uuid references auth.users on delete cascade primary key,
   email       text not null,
@@ -30,6 +18,20 @@ create table if not exists public.profiles (
 
 alter table public.profiles enable row level security;
 
+
+-- ─── 2. FUNÇÃO get_my_role (precisa de profiles criada primeiro) ──────────────
+create or replace function public.get_my_role()
+returns text
+language sql
+security definer
+set search_path = public
+stable
+as $$
+  select role from public.profiles where id = auth.uid();
+$$;
+
+
+-- ─── 3. POLICIES de PROFILES ─────────────────────────────────────────────────
 create policy "profiles_select_own"   on public.profiles for select using (id = auth.uid());
 create policy "profiles_select_admin" on public.profiles for select using (public.get_my_role() = 'admin');
 create policy "profiles_update_own"   on public.profiles for update using (id = auth.uid());
